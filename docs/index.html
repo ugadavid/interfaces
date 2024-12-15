@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Textarea Style Notion avec Icônes</title>
+  <title>Textarea Auto-Resize</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -23,25 +23,12 @@
 
     .notion-icons {
       display: flex;
-      flex-direction: row; /* Aligne les icônes horizontalement */
-      align-items: center; /* Centre les icônes verticalement */
+      flex-direction: row;
+      align-items: center;
       margin-right: 8px;
-      margin-top: 10px; /* Alignement vertical */
+      margin-top: 10px;
       color: #888;
       cursor: pointer;
-    }
-
-    .notion-icons div {
-      width: 16px;
-      height: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 8px;
-    }
-
-    .notion-icons div:hover {
-      color: #555;
     }
 
     .notion-icons::before {
@@ -68,7 +55,8 @@
       font-size: 16px;
       line-height: 1.5;
       outline: none;
-      resize: none;
+      resize: none; /* Désactive le redimensionnement manuel */
+      overflow: hidden; /* Cache les barres de défilement */
       background-color: #f7f7f7;
     }
 
@@ -76,17 +64,21 @@
       color: #888;
       font-style: italic;
     }
-
-    
   </style>
 </head>
 <body>
   <div class="notion-container">
     <div class="notion-icons"></div>
     <div class="notion-textarea">
-      <textarea placeholder="Écrivez quelque chose..."></textarea>
-      
+      <textarea placeholder="Écrivez quelque chose..." oninput="autoResize(this)"></textarea>
     </div>
   </div>
+
+  <script>
+    function autoResize(textarea) {
+      textarea.style.height = 'auto'; // Réinitialise la hauteur
+      textarea.style.height = textarea.scrollHeight + 'px'; // Ajuste en fonction du contenu
+    }
+  </script>
 </body>
 </html>
