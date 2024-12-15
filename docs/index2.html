@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Création Dynamique de Textarea</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .notion-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 600px;
+      margin: 0 auto;
+    }
+
+    .notion-textarea {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .notion-icons {
+      display: flex;
+      margin-right: 8px;
+      color: #888;
+    }
+
+    .notion-icons::before {
+      content: "\002B"; /* Icône "+" */
+      margin-right: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .notion-textarea textarea {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      line-height: 1.5;
+      outline: none;
+      resize: none;
+      overflow: hidden; /* Pas de scroll */
+      background-color: #fff;
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    .notion-textarea textarea::placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .notion-textarea textarea:focus {
+      background-color: #f7f7f7;
+    }
+  </style>
+</head>
+<body>
+  <div class="notion-container" id="notionContainer">
+    <!-- Premier textarea -->
+    <div class="notion-textarea">
+      <div class="notion-icons"></div>
+      <textarea placeholder="Écrivez quelque chose..." oninput="autoResize(this)" onkeydown="handleKeydown(event, this)"></textarea>
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('notionContainer');
+
+    // Fonction pour ajuster la taille du textarea automatiquement
+    function autoResize(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    // Fonction pour gérer Enter et Shift+Enter
+    function handleKeydown(event, textarea) {
+      if (event.key === 'Enter') {
+        if (!event.shiftKey) {
+          event.preventDefault(); // Empêche le saut de ligne
+          createNewTextarea();    // Crée un nouvel objet textarea
+        }
+        // Sinon (Shift + Enter), le saut de ligne se produit naturellement
+      }
+    }
+
+    // Fonction pour créer un nouvel objet textarea
+    function createNewTextarea() {
+      // Création des éléments
+      const newTextAreaWrapper = document.createElement('div');
+      newTextAreaWrapper.className = 'notion-textarea';
+
+      const icons = document.createElement('div');
+      icons.className = 'notion-icons';
+
+      const newTextarea = document.createElement('textarea');
+      newTextarea.placeholder = "Écrivez quelque chose...";
+      newTextarea.oninput = () => autoResize(newTextarea);
+      newTextarea.onkeydown = (e) => handleKeydown(e, newTextarea);
+
+      // Ajout des éléments dans le DOM
+      newTextAreaWrapper.appendChild(icons);
+      newTextAreaWrapper.appendChild(newTextarea);
+      container.appendChild(newTextAreaWrapper);
+
+      // Focus automatique sur le nouveau textarea
+      newTextarea.focus();
+    }
+  </script>
+</body>
+</html>
