@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Textarea Style Notion avec Icônes SVG</title>
+  <title>Textarea Style Notion avec Icônes</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -17,28 +17,40 @@
 
     .notion-container {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       position: relative;
     }
 
     .notion-icons {
       display: flex;
       flex-direction: column;
-      justify-content: center;
       margin-right: 8px;
+      margin-top: 10px; /* Alignement vertical */
+      color: #888;
+      cursor: pointer;
     }
 
-    .notion-icons svg {
+    .notion-icons div {
       width: 16px;
       height: 16px;
-      fill: #888; /* Couleur des icônes */
-      margin: 5px 0; /* Espacement vertical */
-      cursor: pointer;
-      transition: fill 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
     }
 
-    .notion-icons svg:hover {
-      fill: #555;
+    .notion-icons div:hover {
+      color: #555;
+    }
+
+    .notion-icons::before {
+      content: "⋮⋮"; /* Icône de menu */
+      font-size: 16px;
+    }
+
+    .notion-icons::after {
+      content: "✖"; /* Icône de croix */
+      font-size: 14px;
     }
 
     .notion-textarea {
@@ -54,9 +66,8 @@
       font-size: 16px;
       line-height: 1.5;
       outline: none;
-      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
       resize: none;
-      background-color: white;
+      background-color: #f7f7f7;
     }
 
     .notion-textarea textarea::placeholder {
@@ -64,43 +75,15 @@
       font-style: italic;
     }
 
-    .notion-instructions {
-      position: absolute;
-      top: 10px;
-      left: 15px;
-      color: #bbb;
-      font-size: 14px;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .notion-textarea textarea:focus + .notion-instructions,
-    .notion-textarea textarea:not(:placeholder-shown) + .notion-instructions {
-      display: none;
-    }
+    
   </style>
 </head>
 <body>
   <div class="notion-container">
-    <!-- Icônes à gauche -->
-    <div class="notion-icons">
-      <!-- Icône Menu (⋮⋮) -->
-      <svg viewBox="0 0 24 24">
-        <circle cx="12" cy="6" r="2"></circle>
-        <circle cx="12" cy="12" r="2"></circle>
-        <circle cx="12" cy="18" r="2"></circle>
-      </svg>
-      <!-- Icône Croix (✖) -->
-      <svg viewBox="0 0 24 24">
-        <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"></line>
-        <line x1="6" y1="18" x2="18" y2="6" stroke="currentColor" stroke-width="2"></line>
-      </svg>
-    </div>
-
-    <!-- Zone de texte -->
+    <div class="notion-icons"></div>
     <div class="notion-textarea">
       <textarea placeholder="Écrivez quelque chose..."></textarea>
-      <div class="notion-instructions">Appuyez sur la touche espace pour l’IA, ou sur la touche / pour les commandes...</div>
+      
     </div>
   </div>
 </body>
